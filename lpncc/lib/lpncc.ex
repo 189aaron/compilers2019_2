@@ -67,6 +67,7 @@ defmodule Lpncc do
     lista_tokens=File.read!(file_path)
     |> Sanitizer.sanitize_source()
     |> Lexer.scan_words()
+<<<<<<< HEAD
     evaluar=Evaluator.evaluator_lexer(lista_tokens)
     if evaluar==[] do
       arbolAST=lista_tokens
@@ -125,6 +126,11 @@ else
     linea=to_string(linea_numero+1)
     mensaje_error="La  "<>palabra<>" es no esperada  en linea: "<>linea
     IO.inspect(mensaje_error)
+=======
+    |> Parser.program()
+    |> CodeGenerator.generate_code() 
+    |> Linker.generate_binary(assembly_path)
+>>>>>>> 9b2ba9fe6f8f3c090b3d2a14686978dc03aa0846
   end
 end
 
@@ -134,6 +140,7 @@ end
     lista_tokens=File.read!(file_path)
     |> Sanitizer.sanitize_source()
     |> Lexer.scan_words()
+<<<<<<< HEAD
     evaluar=Evaluator.evaluator_lexer(lista_tokens)
     if evaluar==[] do
       IO.inspect(lista_tokens)
@@ -149,6 +156,15 @@ end
   defp print_AST(file_path) do
     IO.puts("\n  AST TREE \n")
     lista_tokens=File.read!(file_path)
+=======
+    |> Parser.program()
+    |> CodeGenerator.generate_code()
+    |> Linker.generate_binary(assembly_path <> ".s")
+  end
+
+  defp  lista_tokens(file_path) do
+    File.read!(file_path)
+>>>>>>> 9b2ba9fe6f8f3c090b3d2a14686978dc03aa0846
     |> Sanitizer.sanitize_source()
     |> Lexer.scan_words()
     evaluar=Evaluator.evaluator_lexer(lista_tokens)
@@ -180,6 +196,7 @@ end
     lista_tokens=File.read!(file_path)
     |> Sanitizer.sanitize_source()
     |> Lexer.scan_words()
+<<<<<<< HEAD
     evaluar=Evaluator.evaluator_lexer(lista_tokens)
     if evaluar==[] do
       arbolAST=lista_tokens
@@ -204,6 +221,22 @@ end
       IO.inspect(mensaje_error)
     end
 end
+=======
+    |> Parser.program()
+    |> IO.inspect(label: "\nSalida del Parser (AST)\n")
+  end
+
+
+  defp ensamblador(file_path) do
+      File.read!(file_path)
+      |> Sanitizer.sanitize_source()
+      |> Lexer.scan_words()
+      |> Parser.program()
+      |> CodeGenerator.generate_code()
+      |> IO.puts()
+  end
+
+>>>>>>> 9b2ba9fe6f8f3c090b3d2a14686978dc03aa0846
 
 
   defp print_help_message do

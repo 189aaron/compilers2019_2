@@ -4,6 +4,7 @@ defmodule Lexer do
   end
 
   def get_constant(program,linea) do
+<<<<<<< HEAD
 		valor=Regex.run(~r/^\d+/, program)
 		if valor != :nil do
 			case valor do
@@ -50,6 +51,52 @@ defmodule Lexer do
           {{:complement_keyword, linea_keyword}, rest}
         "!" <> rest ->
           {{:negative_logical, linea_keyword}, rest}
+=======
+    val = Regex.run(~r/^\d+/, program)
+    if val != nil do
+      case val do
+        [value] ->
+          {{:constant, String.to_integer(value),linea}, String.trim_leading(program, value)}
+      end
+    else
+      {["Error",program,linea],""}
+    end
+  end
+
+  def lex_raw_tokens({program,linea}) when program != "" do
+    kwLine = linea
+    {token, rest} =
+      case program do
+        "{" <> rest ->
+          {{:open_brace,kwLine}, rest}
+
+        "}" <> rest ->
+          {{:close_brace,kwLine}, rest}
+
+        "(" <> rest ->
+          {{:open_paren,kwLine}, rest}
+
+        ")" <> rest ->
+          {{:close_paren,kwLine}, rest}
+
+        ";" <> rest ->
+          {{:semicolon, kwLine}, rest}
+
+        "return" <> rest ->
+          {{:return_keyword, kwLine}, rest}
+
+        "int" <> rest ->
+          {{:int_keyword, kwLine}, rest}
+
+        "main" <> rest ->
+          {{:main_keyword, kwLine}, rest}
+        "-" <> rest ->
+          {{:substractor, kwLine}, rest}
+        "~" <> rest ->
+          {{:complemento, kwLine}, rest}
+        "!" <> rest ->
+          {{:negacion_logica, kwLine}, rest}
+>>>>>>> 9b2ba9fe6f8f3c090b3d2a14686978dc03aa0846
 
         rest ->
           get_constant(rest,linea)
